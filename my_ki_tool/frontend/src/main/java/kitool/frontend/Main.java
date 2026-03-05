@@ -17,11 +17,10 @@ public class Main extends Application {
         OllamaSetupService setupService = new OllamaSetupService();
 
         if (!setupService.isOllamaInstalled()) {
-            // Ollama ist nicht installiert – Installationsdialog zeigen
             Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-            dialog.setTitle("Ersteinrichtung");
-            dialog.setHeaderText("Ollama wird installiert...");
-            dialog.setContentText("Bitte warten, dies dauert nur einen Moment.");
+            dialog.setTitle("initial setup");
+            dialog.setHeaderText("Ollama is being installed...");
+            dialog.setContentText("Please wait, this will only take a moment.");
             dialog.show();
 
             new Thread(() -> {
@@ -30,7 +29,7 @@ public class Main extends Application {
                     setupService.startOllama();
                     Platform.runLater(() -> {
                         dialog.close();
-                        ladeHauptfenster(stage);
+                        loadMainWindow(stage);
                     });
                 } catch (Exception e) {
                     Platform.runLater(() -> {
@@ -41,18 +40,18 @@ public class Main extends Application {
             }).start();
 
         } else {
-            // Ollama ist installiert – nur starten
+
             try {
                 setupService.startOllama();
             } catch (Exception e) {
                 zeigeFehlerdialog(stage, e.getMessage());
                 return;
             }
-            ladeHauptfenster(stage);
+            loadMainWindow(stage);
         }
     }
 
-    private void ladeHauptfenster(Stage stage) {
+    private void loadMainWindow(Stage stage) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/fxml/MainView.fxml"));
@@ -77,8 +76,8 @@ public class Main extends Application {
 
     private void zeigeFehlerdialog(Stage stage, String message) {
         Alert error = new Alert(Alert.AlertType.ERROR);
-        error.setTitle("Fehler");
-        error.setHeaderText("Ollama konnte nicht gestartet werden");
+        error.setTitle("Failure");
+        error.setHeaderText("Ollama can not started");
         error.setContentText(message);
         error.showAndWait();
     }
