@@ -26,8 +26,8 @@ public class Main extends Application {
 
             new Thread(() -> {
                 try {
-                    setupService.installiereOllama();
-                    setupService.starteOllama();
+                    setupService.installOllama();
+                    setupService.startOllama();
                     Platform.runLater(() -> {
                         dialog.close();
                         ladeHauptfenster(stage);
@@ -43,7 +43,7 @@ public class Main extends Application {
         } else {
             // Ollama ist installiert – nur starten
             try {
-                setupService.starteOllama();
+                setupService.startOllama();
             } catch (Exception e) {
                 zeigeFehlerdialog(stage, e.getMessage());
                 return;
