@@ -9,9 +9,6 @@
             fx:controller="kitool.frontend.controller.MainController"
             prefWidth="1100" prefHeight="720">
 
-    <!-- ═══════════════════════════════════════════════════
-         TITELLEISTE (oben)
-    ═══════════════════════════════════════════════════ -->
     <top>
         <HBox fx:id="titleBar" styleClass="title-bar" alignment="CENTER_LEFT" spacing="12">
             <Label text="🤖" styleClass="title-logo"/>
@@ -40,19 +37,12 @@
         </HBox>
     </top>
 
-    <!-- ═══════════════════════════════════════════════════
-         HAUPTBEREICH (Mitte)
-    ═══════════════════════════════════════════════════ -->
     <center>
         <SplitPane dividerPositions="0.22" styleClass="main-split">
 
-            <!-- ─────────────────────────────
-                 SEITENLEISTE (Verlauf)
-            ───────────────────────────── -->
             <VBox styleClass="sidebar" minWidth="200" maxWidth="300">
                 <padding><Insets top="16" right="12" bottom="16" left="12"/></padding>
 
-                <!-- Neuer Chat Button -->
                 <Button fx:id="newChatButton"
                         text="＋  Neuer Chat"
                         styleClass="new-chat-button"
@@ -61,18 +51,14 @@
 
                 <VBox.margin><Insets bottom="12"/></VBox.margin>
 
-                <!-- Verlauf Label -->
                 <Label text="VERLAUF" styleClass="sidebar-section-label"/>
 
-                <!-- Chat-Verlauf Liste -->
                 <ListView fx:id="chatHistoryList"
                           styleClass="chat-history-list"
                           VBox.vgrow="ALWAYS"/>
 
-                <!-- Trennlinie -->
                 <Separator styleClass="sidebar-separator"/>
 
-                <!-- Unten: Info -->
                 <VBox spacing="6">
                     <padding><Insets top="8"/></padding>
                     <Label fx:id="ollamaStatusLabel"
@@ -83,12 +69,8 @@
                 </VBox>
             </VBox>
 
-            <!-- ─────────────────────────────
-                 CHAT-BEREICH (rechts)
-            ───────────────────────────── -->
             <VBox styleClass="chat-area" HBox.hgrow="ALWAYS">
 
-                <!-- Chat-Nachrichten -->
                 <ScrollPane fx:id="chatScrollPane"
                             styleClass="chat-scroll"
                             fitToWidth="true"
@@ -98,7 +80,6 @@
                           spacing="16">
                         <padding><Insets top="24" right="32" bottom="24" left="32"/></padding>
 
-                        <!-- Willkommensnachricht -->
                         <VBox styleClass="welcome-box" alignment="CENTER" spacing="10">
                             <Label text="🤖" style="-fx-font-size: 48px;"/>
                             <Label text="Wie kann ich dir helfen?" styleClass="welcome-title"/>
@@ -108,12 +89,10 @@
                     </VBox>
                 </ScrollPane>
 
-                <!-- Eingabebereich -->
                 <VBox styleClass="input-area">
                     <padding><Insets top="12" right="24" bottom="16" left="24"/></padding>
 
                     <HBox spacing="10" alignment="BOTTOM_CENTER">
-                        <!-- Texteingabe -->
                         <TextArea fx:id="messageInput"
                                   styleClass="message-input"
                                   promptText="Nachricht eingeben..."
@@ -122,22 +101,17 @@
                                   maxHeight="120"
                                   HBox.hgrow="ALWAYS"/>
 
-                        <!-- Senden Button -->
                         <VBox alignment="BOTTOM_CENTER">
                             <Button fx:id="sendButton"
                                     text="➤"
                                     styleClass="send-button"/>
-                                    <!--onAction="#sendMessage"-->
                         </VBox>
                     </HBox>
 
-                    <!-- Hinweis unten -->
                     <Label text="KI kann Fehler machen. Wichtige Informationen bitte überprüfen."
                            styleClass="disclaimer-label"/>
                 </VBox>
             </VBox>
-
         </SplitPane>
     </center>
-
 </BorderPane>
