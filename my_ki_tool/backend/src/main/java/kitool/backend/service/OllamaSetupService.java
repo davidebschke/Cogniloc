@@ -20,7 +20,7 @@ public class OllamaSetupService {
                 .getResourceAsStream("/ollama/OllamaSetup.exe")) {
 
             if (is == null) {
-                throw new FileNotFoundException("OllamaSetup.exe nicht in Resources gefunden!");
+                throw new FileNotFoundException("OllamaSetup.exe not found in Resources!");
             }
 
             Files.copy(is, tempInstaller, StandardCopyOption.REPLACE_EXISTING);
@@ -35,12 +35,11 @@ public class OllamaSetupService {
         Files.deleteIfExists(tempInstaller);
 
         if (exitCode != 0) {
-            throw new RuntimeException("Ollama Installation fehlgeschlagen mit Code: " + exitCode);
+            throw new RuntimeException("Ollama installation failed with code: " + exitCode);
         }
     }
 
     public void startOllama() throws Exception {
-        // Prüfen ob Ollama bereits läuft
         try {
             new java.net.Socket("localhost", 11434).close();
             return;
@@ -58,6 +57,6 @@ public class OllamaSetupService {
             } catch (Exception ignored) {}
         }
 
-        throw new RuntimeException("Ollama konnte nicht gestartet werden.");
+        throw new RuntimeException("Ollama can not start.");
     }
 }
