@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions>
+    <suppress until="2026-09-01">
+        <notes>
+            GHSA-72hv-8253-57qq – DoS im async JSON Parser (jackson-core).
+            DoS in async JSON parser.
+            Only affects reactive stacks (WebFlux/Netty).
+            We use Spring MVC (synchronous) – not affected.
+            Checked on March 5, 2026. Not CVE
+        </notes>
+        <filePath regex="true">.*jackson-core.*\.jar</filePath>
+        <vulnerabilityName>GHSA-72hv-8253-57qq</vulnerabilityName>
+    </suppress>
+
+</suppressions>
