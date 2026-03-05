@@ -20,7 +20,6 @@ public class OllamaService {
         this.ollamaAPI.setRequestTimeoutSeconds(300);
     }
 
-    // Prüft ob Ollama läuft
     public boolean isOllamaRunning() {
         try {
             return ollamaAPI.ping();
@@ -29,7 +28,6 @@ public class OllamaService {
         }
     }
 
-    // Gibt alle installierten Modelle zurück
     public List<String> getAvailableModels() {
         try {
            return ollamaAPI.listModels()
@@ -43,7 +41,6 @@ public class OllamaService {
         }
     }
 
-    // Sendet eine Nachricht und gibt die Antwort zurück
     public String chat(String userMessage) throws Exception {
         OllamaResult result = ollamaAPI.generate(
                 currentModel,
