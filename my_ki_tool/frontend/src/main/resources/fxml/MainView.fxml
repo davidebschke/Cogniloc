@@ -35,7 +35,6 @@
             </Button>
             <ComboBox   fx:id="changeLanguageBox"
                         styleClass="topComboBox"
-                        promptText="Sprache wählen"
                         onAction="#changeLanguage"
                         value="%Language.choosen">
             <items>
@@ -59,14 +58,14 @@
                 <padding><Insets top="16" right="12" bottom="16" left="12"/></padding>
 
                 <Button fx:id="newChatButton"
-                        text="＋  Neuer Chat"
+                        text="%Sidebar.newChatText"
                         styleClass="new-chat-button"
                         maxWidth="Infinity"/>
 
 
                 <VBox.margin><Insets bottom="12"/></VBox.margin>
 
-                <Label text="VERLAUF" styleClass="sidebar-section-label"/>
+                <Label text="%Sidebar.historyInfo" styleClass="sidebar-section-label"/>
 
                 <ListView fx:id="chatHistoryList"
                           styleClass="chat-history-list"
@@ -77,9 +76,9 @@
                 <VBox spacing="6">
                     <padding><Insets top="8"/></padding>
                     <Label fx:id="ollamaStatusLabel"
-                           text="● Ollama verbunden"
+                           text="%Sidebar.ollamaConnectInfo"
                            styleClass="status-label-ok"/>
-                    <Label text="MyKiTool v1.0"
+                    <Label text="FroggyBot v1.0"
                            styleClass="label-subtle"/>
                 </VBox>
             </VBox>
@@ -97,8 +96,8 @@
 
                         <VBox styleClass="welcome-box" alignment="CENTER" spacing="10">
                             <Label text="🤖" style="-fx-font-size: 48px;"/>
-                            <Label text="Wie kann ich dir helfen?" styleClass="welcome-title"/>
-                            <Label text="Stelle mir eine Frage oder starte ein Gespräch."
+                            <Label text="%ChatBox.howCanHelp" styleClass="welcome-title"/>
+                            <Label text="%ChatBox.askMe"
                                    styleClass="welcome-subtitle"/>
                         </VBox>
                     </VBox>
@@ -110,7 +109,7 @@
                     <HBox spacing="10" alignment="BOTTOM_CENTER">
                         <TextArea fx:id="messageInput"
                                   styleClass="message-input"
-                                  promptText="Nachricht eingeben..."
+                                  promptText="%MessageBox.promptText"
                                   wrapText="true"
                                   prefRowCount="2"
                                   maxHeight="120"
@@ -123,7 +122,7 @@
                         </VBox>
                     </HBox>
 
-                    <Label text="KI kann Fehler machen. Wichtige Informationen bitte überprüfen."
+                    <Label text="%KiInfo.Info"
                            styleClass="disclaimer-label"/>
                 </VBox>
             </VBox>

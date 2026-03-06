@@ -65,7 +65,6 @@ public class MainController{
         }
 
         if (läuft) {
-            ollamaStatusLabel.setText("● Ollama connected");
             ollamaStatusLabel.getStyleClass().setAll("status-label-ok");
         }
         preferOllamaStatus();
@@ -81,7 +80,6 @@ public class MainController{
             boolean läuft = ollamaService.isOllamaRunning();
             Platform.runLater(() -> {
                 if (läuft) {
-                    ollamaStatusLabel.setText("● Ollama connected");
                     ollamaStatusLabel.getStyleClass().setAll("status-label-ok");
                 } else {
                     ollamaStatusLabel.setText("● Ollama is not connected");
