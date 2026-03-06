@@ -3,14 +3,24 @@ package kitool.frontend.controller;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import kitool.backend.service.OllamaService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class MainController{
     @FXML
@@ -30,9 +40,9 @@ public class MainController{
     @FXML
     private ComboBox<String> modelSelector;
     @FXML
-    private ListView<String> chatHistoryList;
+    private ComboBox<String> changeLanguageBox;
     @FXML
-    private HBox titleBar;
+    private ListView<String> chatHistoryList;
 
     private  OllamaService ollamaService;
 
@@ -40,81 +50,74 @@ public class MainController{
     public void initialize() {
         ollamaService = new OllamaService();
 
-        // DIREKT ohne Thread testen
-        boolean läuft = ollamaService.isOllamaRunning();
+        boolean run = ollamaService.isOllamaRunning();
 
         List<String> modelle = ollamaService.getAvailableModels();
 
         if (!modelle.isEmpty()) {
             modelSelector.setItems(FXCollections.observableArrayList(modelle));
-            modelSelector.setValue(modelle.get(0));
-            ollamaService.setCurrentModel(modelle.get(0));
+            modelSelector.setValue(modelle.getFirst());
+            ollamaService.setCurrentModel(modelle.getFirst());
         }
 
-        if (läuft) {
-            ollamaStatusLabel.setText("● Ollama verbunden");
+        if (run) {
             ollamaStatusLabel.getStyleClass().setAll("status-label-ok");
         }
         preferOllamaStatus();
-        ladeModelle();
-        konfiguriereDarkModeToggle();
-        konfiguriereSendenMitEnter();
+        loadModels();
+        configureDarkModeToggle();
+        configureSenderWithEnter();
+
     }
 
-    // ─────────────────────────────────────────────
-    // INITIALISIERUNG
-    // ─────────────────────────────────────────────
+
     private void preferOllamaStatus() {
         new Thread(() -> {
-            boolean läuft = ollamaService.isOllamaRunning();
+            boolean run = ollamaService.isOllamaRunning();
             Platform.runLater(() -> {
-                if (läuft) {
-                    ollamaStatusLabel.setText("● Ollama verbunden");
+                if (run) {
                     ollamaStatusLabel.getStyleClass().setAll("status-label-ok");
                 } else {
-                    ollamaStatusLabel.setText("● Ollama nicht erreichbar");
+                    ollamaStatusLabel.setText("● Ollama is not connected");
                     ollamaStatusLabel.getStyleClass().setAll("status-label-error");
                 }
             });
         }).start();
     }
 
-    private void ladeModelle() {
+    private void loadModels() {
         new Thread(() -> {
             List<String> modelle = ollamaService.getAvailableModels();
             Platform.runLater(() -> {
                 if (!modelle.isEmpty()) {
                     modelSelector.setItems(FXCollections.observableArrayList(modelle));
-                    modelSelector.setValue(modelle.get(0));
-                    ollamaService.setCurrentModel(modelle.get(0));
+                    modelSelector.setValue(modelle.getFirst());
+                    ollamaService.setCurrentModel(modelle.getFirst());
                 } else {
                     modelSelector.setItems(FXCollections.observableArrayList("llama3"));
                     modelSelector.setValue("llama3");
                 }
             });
         }).start();
-        // Modellwechsel
+        
         modelSelector.setOnAction(e -> {
-            String gewähltesModell = modelSelector.getValue();
-            if (gewähltesModell != null) {
-                ollamaService.setCurrentModel(gewähltesModell);
+            String choosenModell = modelSelector.getValue();
+            if (choosenModell != null) {
+                ollamaService.setCurrentModel(choosenModell);
             }
         });
-        System.out.println("modelSelector ist null: " + (modelSelector == null));
 
         List<String> modelle = ollamaService.getAvailableModels();
-        System.out.println("Modelle: " + modelle);
 
         if (modelSelector != null && !modelle.isEmpty()) {
             modelSelector.setItems(FXCollections.observableArrayList(modelle));
-            modelSelector.setValue(modelle.get(0));
-            ollamaService.setCurrentModel(modelle.get(0));
+            modelSelector.setValue(modelle.getFirst());
+            ollamaService.setCurrentModel(modelle.getFirst());
         }
     }
 
 
-        // Darkmode Control : Wird noch ausgelagert
-        private void konfiguriereDarkModeToggle() {
+        private void configureDarkModeToggle() {
             darkModeToggle.selectedProperty().addListener((obs, oldVal, isSelected) -> {
                 if (Boolean.TRUE.equals(isSelected)) {
                     darkModeToggle.setStyle("-fx-background-color: #5B8DEF; -fx-text-fill: #FFFFFF;-fx-border-color: #5B8DEF;");
@@ -125,7 +128,7 @@ public class MainController{
             });
         }
 
-    private void konfiguriereSendenMitEnter() {
+    private void configureSenderWithEnter() {
         messageInput.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case ENTER -> {
@@ -140,9 +143,6 @@ public class MainController{
         });
     }
 
-    // ─────────────────────────────────────────────
-    // AKTIONEN
-    // ─────────────────────────────────────────────
 
     @FXML
     private void sendMessage() {
@@ -157,18 +157,16 @@ public class MainController{
             zeigeNachricht("Kein Modell verfügbar. Bitte stelle sicher dass Ollama ein Modell installiert hat (z.B. 'ollama pull llama3').", false);
             return;
         }
-        // Willkommensbox entfernen beim ersten Chat
+
         chatMessageContainer.getChildren().removeIf(
                 node -> node.getStyleClass().contains("welcome-box")
         );
 
-        // User-Nachricht anzeigen
         zeigeNachricht(text, true);
         System.out.println("Das ist mein Text: "+text);
         messageInput.clear();
         sendButton.setDisable(true);
 
-        // KI-Antwort in eigenem Thread holen
         new Thread(() -> {
             try {
                 String antwort = ollamaService.chat(text);
@@ -237,7 +235,7 @@ public class MainController{
 
     @FXML
     private void toggleDarkMode() {
-        javafx.scene.Scene scene = darkModeToggle.getScene();
+        Scene scene = darkModeToggle.getScene();
         if (scene == null) return;
         scene.getStylesheets().clear();
         if (darkModeToggle.isSelected()) {
@@ -251,12 +249,9 @@ public class MainController{
 
     @FXML
     private void openSettings() {
-        // Einstellungen Dialog – kommt später
         System.out.println("Einstellungen öffnen");
     }
 
-
-    // new Chat button pressed : Wird noch ausgelagert
     @FXML
             private void pressedNewChat() {
         newChatButton.pressedProperty().addListener((obs, oldVal, isPressed) -> {
@@ -270,7 +265,6 @@ public class MainController{
     }
 
     @FXML
-        // message input (Texteingabebereich ) : Wird noch auslagert
     private void messageInputFocused() {
         messageInput.focusedProperty().addListener((obs, oldVal, isFocused) -> {
             if (Boolean.TRUE.equals(isFocused)) {
@@ -293,5 +287,24 @@ public class MainController{
             }
         });
 
+    }
+
+    @FXML
+    public void changeLanguage() throws IOException {
+        Locale locale=switch (changeLanguageBox.getValue()){
+            case "Deutsch"-> Locale.GERMAN;
+            case "English"-> Locale.ENGLISH;
+            case "Francais"->Locale.FRENCH;
+            default -> throw new IllegalStateException("Unexpected value: " + changeLanguageBox.getValue());
+        };
+        ResourceBundle bundle = ResourceBundle.getBundle("languagePacks/messages", locale);
+
+        Stage stage = (Stage) changeLanguageBox.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/fxml/MainView.fxml"), bundle
+        );
+
+        Parent root = loader.load();
+        stage.getScene().setRoot(root);
     }
 }

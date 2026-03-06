@@ -5,13 +5,17 @@ import io.github.ollama4j.exceptions.OllamaBaseException;
 import io.github.ollama4j.models.Model;
 import io.github.ollama4j.models.OllamaResult;
 import io.github.ollama4j.utils.OptionsBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Locale;
 
 public class OllamaService {
 
+    private static final Logger log = LoggerFactory.getLogger(OllamaService.class);
     private final OllamaAPI ollamaAPI;
     private String currentModel = "llama3";
 
@@ -20,7 +24,7 @@ public class OllamaService {
         this.ollamaAPI.setRequestTimeoutSeconds(300);
     }
 
-    // Prüft ob Ollama läuft
+
     public boolean isOllamaRunning() {
         try {
             return ollamaAPI.ping();
@@ -29,7 +33,6 @@ public class OllamaService {
         }
     }
 
-    // Gibt alle installierten Modelle zurück
     public List<String> getAvailableModels() {
         try {
            return ollamaAPI.listModels()
@@ -43,7 +46,6 @@ public class OllamaService {
         }
     }
 
-    // Sendet eine Nachricht und gibt die Antwort zurück
     public String chat(String userMessage) throws Exception {
         OllamaResult result = ollamaAPI.generate(
                 currentModel,

@@ -8,7 +8,18 @@
     </parent>
     <artifactId>backend</artifactId>
     <name>Archetype - backend</name>
-    <url>http://maven.apache.org</url>
+    <url>https://maven.apache.org</url>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <configuration>
+                    <suppressionFile>suppression.xml</suppressionFile>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <dependency>
             <groupId>io.github.ollama4j</groupId>
@@ -20,5 +31,8 @@
         <artifactId>slf4j-simple</artifactId>
         <version>2.0.9</version>
         </dependency>
+
     </dependencies>
+
+
 </project>

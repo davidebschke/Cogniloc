@@ -1,19 +1,10 @@
-/* ═══════════════════════════════════════════════════════════════
-   MyKiTool - Light Mode Stylesheet (JavaFX kompatibel)
-═══════════════════════════════════════════════════════════════ */
 
-/* ───────────────────────────────────────────────────────────────
-   ROOT
-─────────────────────────────────────────────────────────────── */
 .root {
     -fx-font-family: "Segoe UI";
     -fx-font-size: 14px;
     -fx-background-color: #F5F7FF;
 }
-
-/* ───────────────────────────────────────────────────────────────
-   TITELLEISTE
-─────────────────────────────────────────────────────────────── */
+/
 .title-bar {
     -fx-background-color: #FFFFFF;
     -fx-border-color: #D8DEFF;
@@ -36,10 +27,7 @@
     -fx-font-size: 12px;
 }
 
-/* ───────────────────────────────────────────────────────────────
-   MODELLAUSWAHL
-─────────────────────────────────────────────────────────────── */
-.model-selector {
+.topComboBox {
     -fx-background-color: #EBF1FF;
     -fx-border-color: #5B8DEF;
     -fx-border-width: 1.5;
@@ -49,19 +37,16 @@
     -fx-cursor: hand;
 }
 
-.model-selector:hover {
+.topComboBox:hover {
     -fx-background-color: #D6E4FF;
 }
 
-.model-selector .list-cell {
+.topComboBox .list-cell {
     -fx-text-fill: #1A1A2E;
     -fx-background-color: #FFFFFF;
     -fx-padding: 6 10 6 10;
 }
 
-/* ───────────────────────────────────────────────────────────────
-   DARK MODE TOGGLE
-─────────────────────────────────────────────────────────────── */
 .dark-mode-toggle {
     -fx-background-color: #EBF1FF;
     -fx-text-fill: #5A6380;
@@ -84,9 +69,6 @@
     -fx-border-color: #5B8DEF;
 }
 
-/* ───────────────────────────────────────────────────────────────
-   ICON BUTTON
-─────────────────────────────────────────────────────────────── */
 .icon-button {
     -fx-background-color: transparent;
     -fx-text-fill: #5A6380;
@@ -101,9 +83,6 @@
     -fx-text-fill: #5B8DEF;
 }
 
-/* ───────────────────────────────────────────────────────────────
-   SEITENLEISTE
-─────────────────────────────────────────────────────────────── */
 .sidebar {
     -fx-background-color: #E8ECFC;
     -fx-border-color: #D8DEFF;
@@ -176,9 +155,6 @@
     -fx-font-size: 12px;
 }
 
-/* ───────────────────────────────────────────────────────────────
-   CHAT BEREICH
-─────────────────────────────────────────────────────────────── */
 .main-split {
     -fx-background-color: #F5F7FF;
     -fx-border-color: transparent;
@@ -221,9 +197,6 @@
     -fx-text-fill: #9AA3BF;
 }
 
-/* ───────────────────────────────────────────────────────────────
-   CHAT-BLASEN
-─────────────────────────────────────────────────────────────── */
 .bubble-ai {
     -fx-background-color: #1A8AEF;
     -fx-background-radius: 4 18 18 18;
@@ -254,9 +227,6 @@
     -fx-padding: 0 4 2 4;
 }
 
-/* ───────────────────────────────────────────────────────────────
-   EINGABEBEREICH
-─────────────────────────────────────────────────────────────── */
 .input-area {
     -fx-background-color: #FFFFFF;
     -fx-border-color: #D8DEFF;
@@ -311,9 +281,6 @@
     -fx-padding: 6 0 0 0;
 }
 
-/* ───────────────────────────────────────────────────────────────
-   SCROLLBAR
-─────────────────────────────────────────────────────────────── */
 .scroll-bar {
     -fx-background-color: transparent;
 }
