@@ -2,7 +2,6 @@ package kitool.frontend.controller;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -24,7 +23,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainController{
-    private static final Logger log = LoggerFactory.getLogger(MainController.class);
     @FXML
     private ToggleButton darkModeToggle;
     @FXML
@@ -45,16 +43,14 @@ public class MainController{
     private ComboBox<String> changeLanguageBox;
     @FXML
     private ListView<String> chatHistoryList;
-    @FXML
-    private HBox titleBar;
 
     private  OllamaService ollamaService;
 
     @FXML
-    public void initialize() throws IOException {
+    public void initialize() {
         ollamaService = new OllamaService();
 
-        boolean läuft = ollamaService.isOllamaRunning();
+        boolean run = ollamaService.isOllamaRunning();
 
         List<String> modelle = ollamaService.getAvailableModels();
 
@@ -64,7 +60,7 @@ public class MainController{
             ollamaService.setCurrentModel(modelle.getFirst());
         }
 
-        if (läuft) {
+        if (run) {
             ollamaStatusLabel.getStyleClass().setAll("status-label-ok");
         }
         preferOllamaStatus();
@@ -77,9 +73,9 @@ public class MainController{
 
     private void preferOllamaStatus() {
         new Thread(() -> {
-            boolean läuft = ollamaService.isOllamaRunning();
+            boolean run = ollamaService.isOllamaRunning();
             Platform.runLater(() -> {
-                if (läuft) {
+                if (run) {
                     ollamaStatusLabel.getStyleClass().setAll("status-label-ok");
                 } else {
                     ollamaStatusLabel.setText("● Ollama is not connected");
@@ -105,15 +101,13 @@ public class MainController{
         }).start();
         
         modelSelector.setOnAction(e -> {
-            String gewähltesModell = modelSelector.getValue();
-            if (gewähltesModell != null) {
-                ollamaService.setCurrentModel(gewähltesModell);
+            String choosenModell = modelSelector.getValue();
+            if (choosenModell != null) {
+                ollamaService.setCurrentModel(choosenModell);
             }
         });
-        System.out.println("modelSelector is null: " + (modelSelector == null));
 
         List<String> modelle = ollamaService.getAvailableModels();
-        System.out.println("Models: " + modelle);
 
         if (modelSelector != null && !modelle.isEmpty()) {
             modelSelector.setItems(FXCollections.observableArrayList(modelle));
