@@ -5,19 +5,41 @@ import io.github.ollama4j.exceptions.OllamaBaseException;
 import io.github.ollama4j.models.Model;
 import io.github.ollama4j.models.OllamaResult;
 import io.github.ollama4j.utils.OptionsBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Locale;
 
 public class OllamaService {
 
+    private static final Logger log = LoggerFactory.getLogger(OllamaService.class);
     private final OllamaAPI ollamaAPI;
     private String currentModel = "llama3";
 
     public OllamaService() {
         this.ollamaAPI = new OllamaAPI("http://localhost:11434");
         this.ollamaAPI.setRequestTimeoutSeconds(300);
+    }
+
+    public static void changeLanguage(String choosenLanguage) {
+        switch (choosenLanguage) {
+                case "English":
+                Locale.setDefault(new Locale("en", "US"));
+                log.info("Language: English-US");
+                break;
+                case "Francais":
+                Locale.setDefault(new Locale("fr", "FR"));
+                log.info("Language: Francais");
+                break;
+                case "Deutsch":
+                Locale.setDefault(new Locale("de", "DE"));
+                log.info("Language: Deutsch");
+                break;
+
+        }
     }
 
     public boolean isOllamaRunning() {

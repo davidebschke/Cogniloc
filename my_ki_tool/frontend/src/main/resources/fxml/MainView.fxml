@@ -4,6 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="kitool.frontend.controller.MainController"
@@ -31,12 +33,18 @@
                     <Tooltip text="Einstellungen"/>
                 </tooltip>
             </Button>
-            <ComboBox   fx:id="changeLanguageButton"
-                        styleClass="topComboBox">
-                    <!--onAction="#changeLanguage">-->
-                <tooltip>
-                    <Tooltip text="Language"/>
-                </tooltip>
+            <ComboBox   fx:id="changeLanguageBox"
+                        styleClass="topComboBox"
+                        promptText="Sprache wählen"
+                        onAction="#changeLanguage"
+                        value="English">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Deutsch"/>
+                    <String fx:value="English"/>
+                    <String fx:value="Francais"/>
+                </FXCollections>
+            </items>
             </ComboBox>
             <HBox.margin>
                 <Insets top="12" right="20" bottom="12" left="20"/>

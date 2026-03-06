@@ -2,6 +2,7 @@ package kitool.frontend.controller;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,6 +30,8 @@ public class MainController{
     private VBox chatMessageContainer;
     @FXML
     private ComboBox<String> modelSelector;
+    @FXML
+    private ComboBox<String> changeLanguageBox;
     @FXML
     private ListView<String> chatHistoryList;
     @FXML
@@ -81,8 +84,8 @@ public class MainController{
             Platform.runLater(() -> {
                 if (!modelle.isEmpty()) {
                     modelSelector.setItems(FXCollections.observableArrayList(modelle));
-                    modelSelector.setValue(modelle.get(0));
-                    ollamaService.setCurrentModel(modelle.get(0));
+                    modelSelector.setValue(modelle.getFirst());
+                    ollamaService.setCurrentModel(modelle.getFirst());
                 } else {
                     modelSelector.setItems(FXCollections.observableArrayList("llama3"));
                     modelSelector.setValue("llama3");
@@ -279,5 +282,10 @@ public class MainController{
             }
         });
 
+    }
+
+
+    public void changeLanguage() {
+            OllamaService.changeLanguage(changeLanguageBox.getValue());
     }
 }
