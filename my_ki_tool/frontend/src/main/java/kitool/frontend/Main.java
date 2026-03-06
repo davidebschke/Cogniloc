@@ -7,10 +7,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import kitool.backend.service.OllamaSetupService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class Main extends Application {
+
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -22,7 +28,6 @@ public class Main extends Application {
             dialog.setHeaderText("Ollama is being installed...");
             dialog.setContentText("Please wait, this will only take a moment.");
             dialog.show();
-
             new Thread(() -> {
                 try {
                     setupService.installOllama();
@@ -49,24 +54,30 @@ public class Main extends Application {
             }
             loadMainWindow(stage);
         }
+
+
+
+
     }
 
     private void loadMainWindow(Stage stage) {
         try {
+            log.info("Loading Main Window");
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/fxml/MainView.fxml"));
-
+                    getClass().getResource("/fxml/MainView.fxml"),loadLanguagePacks());
+            log.info("Loading Scene View");
             Scene scene = new Scene(loader.load(), 1100, 720);
 
+            log.info("Loading Stylesheets");
             scene.getStylesheets().add(
                     Objects.requireNonNull(
                             getClass().getResource("/css/darkMode.css")
                     ).toExternalForm());
 
-            stage.setTitle("MyKiTool");
+            stage.setTitle("FroggyBot");
             stage.setScene(scene);
-            stage.setMinWidth(800);
-            stage.setMinHeight(600);
+            stage.setMinWidth(1000);
+            stage.setMinHeight(800);
             stage.show();
 
         } catch (Exception e) {
@@ -80,6 +91,18 @@ public class Main extends Application {
         error.setHeaderText("Ollama can not started");
         error.setContentText(message);
         error.showAndWait();
+    }
+
+    private ResourceBundle loadLanguagePacks() {
+        try {
+            return ResourceBundle.getBundle(
+                    "languagePacks/messages", Locale.of("en")
+            );
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static void main(String[] args) {

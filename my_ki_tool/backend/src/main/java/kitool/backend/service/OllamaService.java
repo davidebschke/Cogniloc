@@ -24,23 +24,6 @@ public class OllamaService {
         this.ollamaAPI.setRequestTimeoutSeconds(300);
     }
 
-    public static void changeLanguage(String choosenLanguage) {
-        switch (choosenLanguage) {
-                case "English":
-                Locale.setDefault(new Locale("en", "US"));
-                log.info("Language: English-US");
-                break;
-                case "Francais":
-                Locale.setDefault(new Locale("fr", "FR"));
-                log.info("Language: Francais");
-                break;
-                case "Deutsch":
-                Locale.setDefault(new Locale("de", "DE"));
-                log.info("Language: Deutsch");
-                break;
-
-        }
-    }
 
     public boolean isOllamaRunning() {
         try {

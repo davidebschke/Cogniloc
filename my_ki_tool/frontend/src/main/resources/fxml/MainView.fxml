@@ -3,9 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
-
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
+
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="kitool.frontend.controller.MainController"
@@ -14,12 +14,12 @@
     <top>
         <HBox fx:id="titleBar" styleClass="title-bar" alignment="CENTER_LEFT" spacing="12">
             <Label text="🤖" styleClass="title-logo"/>
-            <Label text="MyKiTool" styleClass="title-label"/>
+            <Label text="FroggyBot" styleClass="title-label"/>
             <Region HBox.hgrow="ALWAYS"/>
             <Label text="Modell:" styleClass="label-subtle"/>
             <ComboBox fx:id="modelSelector"
                       styleClass="topComboBox"
-                      promptText="Modell wählen"
+                      promptText="%modell.choose"
                       prefWidth="180"/>
             <ToggleButton fx:id="darkModeToggle"
                           text="🌙  Dark Mode"
@@ -30,14 +30,14 @@
                     styleClass="icon-button"
                     onAction="#openSettings">
                 <tooltip>
-                    <Tooltip text="Einstellungen"/>
+                    <Tooltip text="%settings.tooltipp"/>
                 </tooltip>
             </Button>
             <ComboBox   fx:id="changeLanguageBox"
                         styleClass="topComboBox"
                         promptText="Sprache wählen"
                         onAction="#changeLanguage"
-                        value="English">
+                        value="%Language.choosen">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Deutsch"/>

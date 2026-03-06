@@ -4,16 +4,27 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import kitool.backend.service.OllamaService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class MainController{
+    private static final Logger log = LoggerFactory.getLogger(MainController.class);
     @FXML
     private ToggleButton darkModeToggle;
     @FXML
@@ -40,7 +51,7 @@ public class MainController{
     private  OllamaService ollamaService;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         ollamaService = new OllamaService();
 
         boolean läuft = ollamaService.isOllamaRunning();
@@ -61,7 +72,9 @@ public class MainController{
         loadModels();
         configureDarkModeToggle();
         configureSenderWithEnter();
+
     }
+
 
     private void preferOllamaStatus() {
         new Thread(() -> {
@@ -230,7 +243,7 @@ public class MainController{
 
     @FXML
     private void toggleDarkMode() {
-        javafx.scene.Scene scene = darkModeToggle.getScene();
+        Scene scene = darkModeToggle.getScene();
         if (scene == null) return;
         scene.getStylesheets().clear();
         if (darkModeToggle.isSelected()) {
@@ -284,8 +297,22 @@ public class MainController{
 
     }
 
+    @FXML
+    public void changeLanguage() throws IOException {
+        Locale locale=switch (changeLanguageBox.getValue()){
+            case "Deutsch"-> Locale.GERMAN;
+            case "English"-> Locale.ENGLISH;
+            case "Francais"->Locale.FRENCH;
+            default -> throw new IllegalStateException("Unexpected value: " + changeLanguageBox.getValue());
+        };
+        ResourceBundle bundle = ResourceBundle.getBundle("languagePacks/messages", locale);
 
-    public void changeLanguage() {
-            OllamaService.changeLanguage(changeLanguageBox.getValue());
+        Stage stage = (Stage) changeLanguageBox.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/fxml/MainView.fxml"), bundle
+        );
+
+        Parent root = loader.load();
+        stage.getScene().setRoot(root);
     }
 }
