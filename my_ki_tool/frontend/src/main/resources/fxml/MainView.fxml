@@ -16,7 +16,7 @@
             <Region HBox.hgrow="ALWAYS"/>
             <Label text="Modell:" styleClass="label-subtle"/>
             <ComboBox fx:id="modelSelector"
-                      styleClass="model-selector"
+                      styleClass="topComboBox"
                       promptText="Modell wählen"
                       prefWidth="180"/>
             <ToggleButton fx:id="darkModeToggle"
@@ -31,6 +31,13 @@
                     <Tooltip text="Einstellungen"/>
                 </tooltip>
             </Button>
+            <ComboBox   fx:id="changeLanguageButton"
+                        styleClass="topComboBox">
+                    <!--onAction="#changeLanguage">-->
+                <tooltip>
+                    <Tooltip text="Language"/>
+                </tooltip>
+            </ComboBox>
             <HBox.margin>
                 <Insets top="12" right="20" bottom="12" left="20"/>
             </HBox.margin>
@@ -47,7 +54,7 @@
                         text="＋  Neuer Chat"
                         styleClass="new-chat-button"
                         maxWidth="Infinity"/>
-                        <!--onAction="#newChat"-->
+
 
                 <VBox.margin><Insets bottom="12"/></VBox.margin>
 

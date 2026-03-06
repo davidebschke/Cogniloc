@@ -27,7 +27,7 @@
     -fx-font-size: 12px;
 }
 
-.model-selector {
+.topComboBox {
     -fx-background-color: #EBF1FF;
     -fx-border-color: #5B8DEF;
     -fx-border-width: 1.5;
@@ -37,11 +37,11 @@
     -fx-cursor: hand;
 }
 
-.model-selector:hover {
+.topComboBox:hover {
     -fx-background-color: #D6E4FF;
 }
 
-.model-selector .list-cell {
+.topComboBox .list-cell {
     -fx-text-fill: #1A1A2E;
     -fx-background-color: #FFFFFF;
     -fx-padding: 6 10 6 10;
