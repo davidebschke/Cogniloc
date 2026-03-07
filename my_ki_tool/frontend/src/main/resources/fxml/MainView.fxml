@@ -60,7 +60,8 @@
                 <Button fx:id="newChatButton"
                         text="%Sidebar.newChatText"
                         styleClass="new-chat-button"
-                        maxWidth="Infinity"/>
+                        maxWidth="Infinity"
+                        onAction="#newChat"/>
 
 
                 <VBox.margin><Insets bottom="12"/></VBox.margin>
