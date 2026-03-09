@@ -16,7 +16,7 @@
             <Label text="🤖" styleClass="title-logo"/>
             <Label text="FroggyBot" styleClass="title-label"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Label text="Modell:" styleClass="label-subtle"/>
+            <Label text="Model:" styleClass="label-subtle"/>
             <ComboBox fx:id="modelSelector"
                       styleClass="topComboBox"
                       promptText="%modell.choose"

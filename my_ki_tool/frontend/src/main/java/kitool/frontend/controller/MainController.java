@@ -13,10 +13,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import kitool.backend.service.OllamaService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import kitool.backend.service.chatService.OllamaChatService;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -47,8 +47,9 @@ public class MainController{
     private  OllamaService ollamaService;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         ollamaService = new OllamaService();
+        OllamaChatService ollamaChatService = new OllamaChatService();
 
         boolean run = ollamaService.isOllamaRunning();
 
@@ -67,6 +68,7 @@ public class MainController{
         loadModels();
         configureDarkModeToggle();
         configureSenderWithEnter();
+        ollamaChatService.initChatDB(ollamaChatService.createChatDbUrl("src/main/resources/database/froggyBot.db"));
 
     }
 
@@ -143,16 +145,10 @@ public class MainController{
         });
     }
 
-
-    @FXML
-    private void sendMessage() {
-        sendeNachricht();
-    }
-
     private void sendeNachricht() {
         String text = messageInput.getText().trim();
         if (text.isEmpty()) return;
-        // Prüfen ob ein Modell gewählt ist
+
         if (modelSelector.getValue() == null) {
             zeigeNachricht("Kein Modell verfügbar. Bitte stelle sicher dass Ollama ein Modell installiert hat (z.B. 'ollama pull llama3').", false);
             return;
@@ -262,31 +258,6 @@ public class MainController{
                 newChatButton.setStyle("-fx-background-color: #5B8DEF;");
             }
         });
-    }
-
-    @FXML
-    private void messageInputFocused() {
-        messageInput.focusedProperty().addListener((obs, oldVal, isFocused) -> {
-            if (Boolean.TRUE.equals(isFocused)) {
-                messageInput.setStyle("-fx-border-color: #5B8DEF;");
-            } else {
-                messageInput.setStyle("-fx-border-color: #2E2E48;");
-            }
-        });
-    }
-
-    @FXML
-    private void sendButtonPressed(){
-        sendButton.pressedProperty().addListener((obs, oldVal, isPressed) -> {
-            if (Boolean.TRUE.equals(isPressed)) {
-                sendButton.setStyle("-fx-background-color: #4A7ADB;-fx-scale-x: 0.95;\n" +
-                        "    -fx-scale-y: 0.95;");
-            } else {
-                sendButton.setStyle("-fx-background-color: #5B8DEF;-fx-scale-x: 0;\n" +
-                        "    -fx-scale-y: 0;");
-            }
-        });
-
     }
 
     @FXML
