@@ -1,3 +1,4 @@
 /src/main/resources/archetype-resources/
 /src/main/resources/META-INF/maven/
 /target/
+/src/main/resources/database/froggyBot.db
