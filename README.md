@@ -6,6 +6,7 @@
    * [Particularly important in this project are](#Particularly-important-in-this-project-are)
 3. [Installation Guide](#Installation-Guide)
 4. [Contributing](#Contributing)
+5. [License](#License)
    
 
 ### Explanation of the name
@@ -29,3 +30,7 @@ The Installation Guide is added at the same time as the following issue:
 ### Contributing
 
 The project is designed so that anyone who understands it, wants to learn about it, and generally wants to make a meaningful contribution can participate. To ensure that everything runs smoothly, there are of course a few rules, which are added with the following Issue: [Contributing-Issue](https://github.com/davidebschke/Cogniloc/issues/23)
+
+### License
+
+[GNU General Public License v3.0](https://github.com/davidebschke/Cogniloc/blob/main/LICENSE)
