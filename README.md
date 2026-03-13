@@ -3,7 +3,7 @@
 ## Table of contents
 1. [Explanation of the name](#Explanation-of-the-name)
 2. [Projectdescription](#Projectdescription)
-  3. [Particularly important in this project are](#Particularly-important-in-this-project-are)
+   * [Particularly important in this project are](#Particularly-important-in-this-project-are)
    
 
 ### Explanation of the name
