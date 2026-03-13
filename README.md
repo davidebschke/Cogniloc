@@ -5,6 +5,7 @@
 2. [Projectdescription](#Projectdescription)
    * [Particularly important in this project are](#Particularly-important-in-this-project-are)
 3. [Installation Guide](#Installation-Guide)
+4. [Contributing](#Contributing)
    
 
 ### Explanation of the name
@@ -25,4 +26,6 @@ This project is intended for anyone looking for a local AI chatbot option that n
 The Installation Guide is added at the same time as the following issue: 
 [Install Issue](https://github.com/davidebschke/Cogniloc/issues/17)
 
+### Contributing
 
+The project is designed so that anyone who understands it, wants to learn about it, and generally wants to make a meaningful contribution can participate. To ensure that everything runs smoothly, there are of course a few rules, which are added with the following Issue: [Contributing-Issue](https://github.com/davidebschke/Cogniloc/issues/23)
