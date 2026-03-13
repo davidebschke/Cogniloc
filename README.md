@@ -1,4 +1,7 @@
 # Cogniloc
+
+Explanation of the name: It combines cognition (knowledge/thinking) with local (local/on site).
+
 This project is intended for anyone looking for a local AI chatbot option that not only serves as a classic chatbot but also acquires specialized technical knowledge with the help of specialized chatbots to cover various professions and levels of knowledge without hallinization.
 
 ### Particularly important in this project are:
