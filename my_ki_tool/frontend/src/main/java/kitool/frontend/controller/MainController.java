@@ -152,7 +152,7 @@ public class MainController{
         if (text.isEmpty()) return;
         // Prüfen ob ein Modell gewählt ist
         if (modelSelector.getValue() == null) {
-            zeigeNachricht("Kein Modell verfügbar. Bitte stelle sicher dass Ollama ein Modell installiert hat (z.B. 'ollama pull llama3').", false);
+            showMessage("Kein Modell verfügbar. Bitte stelle sicher dass Ollama ein Modell installiert hat (z.B. 'ollama pull llama3').", false);
             return;
         }
 
@@ -160,7 +160,7 @@ public class MainController{
                 node -> node.getStyleClass().contains("welcome-box")
         );
 
-        zeigeNachricht(text, true);
+        showMessage(text, true);
         System.out.println("Das ist mein Text: "+text);
         messageInput.clear();
         sendButton.setDisable(true);
@@ -169,22 +169,22 @@ public class MainController{
             try {
                 String antwort = ollamaService.chat(text);
                 Platform.runLater(() -> {
-                    zeigeNachricht(antwort, false);
+                    showMessage(antwort, false);
                     sendButton.setDisable(false);
-                    scrolleZumEnde();
+                    scrollToTheEnd();
                 });
             } catch (Exception e) {
                 Platform.runLater(() -> {
-                    zeigeNachricht("Fehler: " + e.getMessage(), false);
+                    showMessage("Fehler: " + e.getMessage(), false);
                     sendButton.setDisable(false);
                 });
             }
         }).start();
 
-        scrolleZumEnde();
+        scrollToTheEnd();
     }
 
-    private void zeigeNachricht(String text, boolean istNutzer) {
+    private void showMessage(String text, boolean istNutzer) {
         VBox bubble = new VBox(4);
 
         Label senderLabel = new Label(istNutzer ? "Du" : "KI");
@@ -206,7 +206,7 @@ public class MainController{
         chatMessageContainer.getChildren().add(zeile);
     }
 
-    private void scrolleZumEnde() {
+    private void scrollToTheEnd() {
         Platform.runLater(() -> chatScrollPane.setVvalue(1.0));
     }
 
