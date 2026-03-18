@@ -1,25 +1,23 @@
 package kitool.backend.service;
 
-import io.github.ollama4j.OllamaAPI;
-import io.github.ollama4j.exceptions.OllamaBaseException;
-import io.github.ollama4j.models.Model;
-import io.github.ollama4j.models.OllamaResult;
-import io.github.ollama4j.utils.OptionsBuilder;
+import io.github.ollama4j.Ollama;
+import io.github.ollama4j.exceptions.OllamaException;
+import io.github.ollama4j.models.chat.OllamaChatMessageRole;
+import io.github.ollama4j.models.chat.OllamaChatRequest;
+import io.github.ollama4j.models.chat.OllamaChatResult;
+import io.github.ollama4j.models.response.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 public class OllamaService {
 
     private static final Logger log = LoggerFactory.getLogger(OllamaService.class);
-    private final OllamaAPI ollamaAPI;
+    private final Ollama ollamaAPI;
     private String currentModel = "llama3";
 
     public OllamaService() {
-        this.ollamaAPI = new OllamaAPI("http://localhost:11434");
+        this.ollamaAPI = new Ollama("http://localhost:11434");
         this.ollamaAPI.setRequestTimeoutSeconds(300);
     }
 
@@ -39,20 +37,20 @@ public class OllamaService {
                     .map(Model::getName)
                     .toList();
 
-        } catch (InterruptedException | OllamaBaseException | IOException | URISyntaxException e) {
+        } catch (OllamaException e) {
             e.printStackTrace();
             return List.of();
         }
     }
 
     public String chat(String userMessage) throws Exception {
-        OllamaResult result = ollamaAPI.generate(
-                currentModel,
-                userMessage,
-                false,
-                new OptionsBuilder().build()
-        );
-        return result.getResponse();
+        OllamaChatRequest request = OllamaChatRequest.builder()
+                .withModel(currentModel)
+                .withMessage(OllamaChatMessageRole.USER, userMessage)
+                .build();
+
+        OllamaChatResult result = ollamaAPI.chat(request,null);
+        return result.getResponseModel().getMessage().getResponse();
     }
 
     public String getCurrentModel() {
