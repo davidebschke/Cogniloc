@@ -161,7 +161,6 @@ public class MainController{
         );
 
         showMessage(text, true);
-        System.out.println("Das ist mein Text: "+text);
         messageInput.clear();
         sendButton.setDisable(true);
 
