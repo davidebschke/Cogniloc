@@ -131,7 +131,6 @@ public class MainController{
             switch (event.getCode()) {
                 case ENTER -> {
                     if (event.isShiftDown()) {
-                        // Shift+Enter = neue Zeile
                     } else {
                         event.consume();
                         sendeNachricht();
